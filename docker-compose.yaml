@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  discord-bot:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: discord-bot
+    restart: always
+    environment:
+      - DISCORD_TOKEN=1337212200942571560
+      - DP_FORCE_YTDL_MOD=@distube/ytdl-core
+    volumes:
+      - .:/app
+      - /app/node_modules
+    networks:
+      - bot-network
+    command: ["node", "index.js"]
+
+networks:
+  bot-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
